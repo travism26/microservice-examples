@@ -11,7 +11,20 @@ This is the authentication service. It is responsible for registering a user, lo
 - Jest
 
 ## How to run
-Run within a cluster using k8s its `gooder` just create a secret for the jwt secret and the mongo uri. Then apply the k8s files in the infra folder.
+Run within a cluster using k8s its `gooder` just create a secret for the jwt secret and the mongo uri. Then apply the k8s files in the infra folder. Once the service is up and running you can hit the endpoints using curl:
+
+```bash
+kubectl get service
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+auth-nodeport-srv   NodePort    xx.xx.xxx.xxx    <none>        3000:31515/TCP   62m
+```
+
+```bash
+curl --header "Content-Type: application/json" \
+--request POST \
+--data '{ "email": "mtravis@ca.test.com", "password": "supersecure" }' \
+http://localhost:31515/api/users/signup
+```
 
 ### Create the secret for the JWT secret
 ```bash
