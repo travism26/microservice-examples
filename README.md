@@ -18,6 +18,16 @@ The project will have the following services:
 5. Run `kubectl apply -f infra/k8s` to deploy the service to k8s
     - for dev create the nodeport services `kubectl apply -f infra/dev`
 
+# Development setup
+1. Clone the repository
+2. Create secrets for the services:
+    - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
+3. Edit hosts file to point to the minikube ip
+    - `sudo nano /etc/hosts`
+    - Add the following line: `127.0.0.1 example-app.com`
+4. Run `skaffold dev` to start the development environment
+
+
 # System Design
 - I want both async and sync communication between services
     - I want to use a message broker for async communication (Kafka, RabbitMQ, etc.)
