@@ -19,10 +19,12 @@ The project will have the following services:
     - for dev create the nodeport services `kubectl apply -f infra/dev`
 
 # Development setup
+- Install Skaffold: `brew install skaffold` or visit the [Skaffold installation page](https://skaffold.dev/docs/install/)
+    - Skaffold is a tool that facilitates continuous development for Kubernetes applications. You can iterate on your application source code locally then deploy to local or remote Kubernetes clusters.
 1. Clone the repository
 2. Create secrets for the services:
     - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
-3. Edit hosts file to point to the minikube ip
+3. Edit hosts file to add the domain name
     - `sudo nano /etc/hosts`
     - Add the following line: `127.0.0.1 example-app.com`
 4. Run `skaffold dev` to start the development environment
