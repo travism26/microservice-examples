@@ -1,4 +1,4 @@
-# microservice-examples
+# microservice-examples (Work in progress)
 I am planning on creating a nodejs project that will be a good starting point for creating a microservice application. This will be a good Template for creating a microservice application.
 
 # Project structure
@@ -7,28 +7,24 @@ The project will have the following services:
 - User service (Not implemented yet)
 - MORE TO COME
 
-# How to run
-1. Clone the repository
-    - Create secrets for the services:
-        - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
-2. Navigate to the service you want to run (`cd auth` or `cd user`)
-3. Build Docker image
-    - Run `docker build -t auth-service $DOCKER_USERNAME/auth-service` or `docker build -t user-service $DOCKER_USERNAME/user-service`
-4. Need to update the `infra/k8s/auth-depl.yaml` or `infra/k8s/user-depl.yaml` with the correct image name (Change the image name to `$DOCKER_USERNAME/auth-service` or `$DOCKER_USERNAME/user-service`)
-5. Run `kubectl apply -f infra/k8s` to deploy the service to k8s
-    - for dev create the nodeport services `kubectl apply -f infra/dev`
-
-# Development setup
-- Install Skaffold: `brew install skaffold` or visit the [Skaffold installation page](https://skaffold.dev/docs/install/)
+# Pre-requisites
+- Docker
+- Kubernetes (comes with Docker Desktop)
+- Skaffold (`brew install skaffold`)
     - Skaffold is a tool that facilitates continuous development for Kubernetes applications. You can iterate on your application source code locally then deploy to local or remote Kubernetes clusters.
+- helm (`brew install helm`)
+- ingress-nginx [Install instructions](https://kubernetes.github.io/ingress-nginx/deploy/#quick-start)
+
+# How to run locally
 1. Clone the repository
-2. Create secrets for the services:
-    - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
-3. Edit hosts file to add the domain name
+    - Create secrets for the service:
+        - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
+2. Edit hosts file to add the domain name
     - `sudo nano /etc/hosts`
     - Add the following line: `127.0.0.1 example-app.com`
-4. Run `skaffold dev` to start the development environment
-
+3. Run `skaffold dev` to start the development environment
+4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
+5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
 
 # System Design
 - I want both async and sync communication between services
