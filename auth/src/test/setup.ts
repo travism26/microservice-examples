@@ -2,6 +2,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import jwt from 'jsonwebtoken';
 
 // global signin function for testing purposes
 // this function will create a fake cookie
@@ -65,8 +66,18 @@ global.signin = async () => {
 
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send({
+      email,
+      password,
+    })
     .expect(201);
-  const cookie = response.get('Set-Cookie');
-  return cookie;
+
+    const cookie = response.get("Set-Cookie");
+    if (!cookie) {
+      throw new Error(
+        "Expected cookie but got undefined."
+      );
+    }
+    return cookie;
 };
+
