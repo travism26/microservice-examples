@@ -26,6 +26,9 @@ The project will have the following services:
 4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
 5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
 
+# Run tests
+- Run `npm run test` in the auth service directory
+
 # System Design
 - I want both async and sync communication between services
     - I want to use a message broker for async communication (Kafka, RabbitMQ, etc.)
