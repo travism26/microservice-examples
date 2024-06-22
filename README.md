@@ -27,7 +27,7 @@ The project will have the following services:
 5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
 
 # Run tests
-- Run `npm run test` in the auth service directory
+- Each service has its own tests that can be run by running `npm run test` in the service directory
 
 # System Design
 - I want both async and sync communication between services
