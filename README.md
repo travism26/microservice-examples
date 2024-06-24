@@ -59,3 +59,8 @@ Build the authentication service I will try to create a production ready service
 
 # A lot of the stuff learned from this project will be from the following sources:
 One course that I learned a lot from is stephen grider's microservices course on udemy. I will be using a lot of the concepts learned from that course in this project. I highly recommend anyone starting with microservices to take this course. I am not affiliated with Stephen Grider in any way. I just think he is a great teacher and this course is worth mentioning. [Stephen Grider's Microservices course](https://www.udemy.com/course/microservices-with-node-js-and-react/).
+
+# Blog posts
+I will be writing blog posts about the things I learned while creating this project. I will be posting them on my [blog](https://www.travisallister.com/blog)
+
+- [Using Skaffold for local development](https://www.travisallister.com/post/using-skaffold-for-development-in-kubernetes)
