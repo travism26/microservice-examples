@@ -48,7 +48,7 @@ router.post(
     req.session = {
       jwt: userJwt,
     };
-
+    console.log('User signed in and JWT generated');
     res.status(200).send(existingUser);
   }
 );
