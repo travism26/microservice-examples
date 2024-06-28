@@ -46,15 +46,13 @@ The project will have the following services:
 
 # Phase 1
 Build the authentication service I will try to create a production ready service that will have the following features:
-- Register a user
-- Login a user
-- Logout a user
-- Refresh token
-- Verify token
-- I will use JWT for token generation the secret will be stored in the environment variable or secrets in k8s
+- Register a user (complete)
+- Login a user (complete)
+- Logout a user (complete)
+- Verify token (complete)
 
 # Phase 2
-- Build the user service that will be responsible for user data.
+Build the user service (Not implemented yet) and add communication between the auth service and the user service, this will be done using a sync communication method (REST).
 
 
 # A lot of the stuff learned from this project will be from the following sources:
