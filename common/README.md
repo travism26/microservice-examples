@@ -15,3 +15,6 @@ npm version patch && npm run build && npm publish
 # Updating services with new version
 
 Once you update this package with the above commands you need to go into the services you want the updates and run the command: `npm update @travismtickets/common` this will update to the lastest version.
+
+# Notes on the package
+The `common` directory is a package that is shared between all the services, or thats the idea.
