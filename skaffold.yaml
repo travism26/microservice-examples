@@ -15,3 +15,12 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
+    - image: travism26/user
+      context: user
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'
+
