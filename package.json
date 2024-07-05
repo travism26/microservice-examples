@@ -16,5 +16,8 @@
     "mongodb-memory-server": "^9.3.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.5"
+  },
+  "dependencies": {
+    "prettier": "^3.3.2"
   }
 }
