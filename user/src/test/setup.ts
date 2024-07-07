@@ -22,7 +22,7 @@ import jwt from 'jsonwebtoken';
 //   }
 // }
 declare global {
-  var signin: () => Promise<string[]>;
+  var signin: () => string[];
 }
 
 // this is a global function that is called before all tests are run
@@ -60,24 +60,25 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+global.signin = () => {
+  const payload = {
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'test@test.com',
+  };
+  // Create the JWT!
+  const token = jwt.sign(payload, process.env.JWT_KEY!);
 
-  const response = await request(app)
-    .post('/api/users/signup')
-    .send({
-      email,
-      password,
-    })
-    .expect(201);
+  // Build session Object. { jwt: MY_JWT }
+  const session = { jwt: token };
 
-    const cookie = response.get("Set-Cookie");
-    if (!cookie) {
-      throw new Error(
-        "Expected cookie but got undefined."
-      );
-    }
-    return cookie;
+  // Turn that session into JSON
+  const sessionJSON = JSON.stringify(session);
+
+  // Take JSON and encode it as base64
+  // this is because the cookie session library will
+  // take the data and convert it to base64
+  const base64 = Buffer.from(sessionJSON).toString('base64');
+
+  // return a string thats the cookie with the encoded data
+  return [`session=${base64}`];
 };
-

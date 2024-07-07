@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
-import { User } from "../models/user";
-import { requireAuth } from '@travismtickets/common';
+import express, { Request, Response } from 'express';
+import { User } from '../models/user';
+import { NotAuthorizedError, requireAuth } from '@travismtickets/common';
 
 const router = express.Router();
 
@@ -17,6 +17,9 @@ const router = express.Router();
  * @param {Response} res - Express response object used to send back the list of users.
  */
 router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
+  if (!req.currentUser) {
+    throw new NotAuthorizedError();
+  }
   const userId = req.currentUser!.id;
   console.log(`userId: ${userId}`);
   const users = await User.find({});
@@ -36,10 +39,12 @@ router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
  * @param {Response} res - Express response object used to send back the user data.
  */
 router.get(
-  "/api/users/:id",
+  '/api/users/:id',
   requireAuth,
   async (req: Request, res: Response) => {
     const user = await User.findById(req.params.id);
     res.send(user);
   }
 );
+
+export { router as indexUserRouter };

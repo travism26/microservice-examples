@@ -17,6 +17,8 @@ router.put(
   async (req: Request, res: Response) => {
     const { firstName, lastName } = req.body;
 
+    // to speed up dev putting model access in the route handler
+    // otherwise, we could have a service that handles this to abstract the model access
     const user = await User.findById(req.params.id);
     if (!user) {
       throw new NotFoundError();

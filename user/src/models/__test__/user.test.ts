@@ -21,7 +21,6 @@ it('implements optimistic concurrency control', async () => {
   try {
     await secondInstance!.save();
   } catch (err) {
-    console.log(err);
     return;
   }
   throw new Error('Should not reach this point');
