@@ -5,7 +5,7 @@ import e from 'express';
 const createUser = async (email: String) => {
   const cookie = global.signin();
   return request(app)
-    .post('/api/users')
+    .post('/api/user')
     .set('Cookie', cookie)
     .send({ email, firstName: 'Test', lastName: 'User' });
 };
@@ -16,7 +16,7 @@ it('returns a 201 on successful signup', async () => {
   await createUser('travis3@test.com');
 
   const response = await request(app)
-    .get('/api/users')
+    .get('/api/user')
     .set('Cookie', global.signin())
     .send()
     .expect(200);
@@ -29,5 +29,5 @@ it('returns a 201 on successful signup', async () => {
 });
 
 it('returns a 401 if not authenticated', async () => {
-  await request(app).get('/api/users').send().expect(401);
+  await request(app).get('/api/user').send().expect(401);
 });

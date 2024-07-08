@@ -65,19 +65,16 @@ global.signin = async () => {
   const password = 'password';
 
   const response = await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email,
       password,
     })
     .expect(201);
 
-    const cookie = response.get("Set-Cookie");
-    if (!cookie) {
-      throw new Error(
-        "Expected cookie but got undefined."
-      );
-    }
-    return cookie;
+  const cookie = response.get('Set-Cookie');
+  if (!cookie) {
+    throw new Error('Expected cookie but got undefined.');
+  }
+  return cookie;
 };
-

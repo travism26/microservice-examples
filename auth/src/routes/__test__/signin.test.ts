@@ -3,13 +3,13 @@ import { app } from '../../app';
 
 describe('Signin Route', () => {
   it('should be defined', async () => {
-    const response = await request(app).post('/api/users/signin').send({});
+    const response = await request(app).post('/api/auth/signin').send({});
     expect(response.status).not.toBe(404);
   });
 
   it('should return a 200 on successful signin', async () => {
     await request(app)
-      .post('/api/users/signup')
+      .post('/api/auth/signup')
       .send({
         email: 'test@test.com',
         password: 'password',
@@ -17,7 +17,7 @@ describe('Signin Route', () => {
       .expect(201);
 
     const response = await request(app)
-      .post('/api/users/signin')
+      .post('/api/auth/signin')
       .send({
         email: 'test@test.com',
         password: 'password',
@@ -29,7 +29,7 @@ describe('Signin Route', () => {
 
   it('should fail when an email that does not exist is supplied', async () => {
     await request(app)
-      .post('/api/users/signin')
+      .post('/api/auth/signin')
       .send({
         email: 'test@test.com',
         password: 'password',
@@ -39,7 +39,7 @@ describe('Signin Route', () => {
 
   it('should fail when an incorrect password is supplied', async () => {
     await request(app)
-      .post('/api/users/signup')
+      .post('/api/auth/signup')
       .send({
         email: 'test@test.com',
         password: 'password',
@@ -47,7 +47,7 @@ describe('Signin Route', () => {
       .expect(201);
 
     await request(app)
-      .post('/api/users/signin')
+      .post('/api/auth/signin')
       .send({
         email: 'test@test.com',
         password: 'wrongpassword',

@@ -7,7 +7,7 @@ import { NotFoundError } from '@travismtickets/common';
 const router = express.Router();
 
 router.put(
-  '/api/users/:id',
+  '/api/user/:id',
   requireAuth,
   [
     body('email').isEmail().withMessage('Email must be valid'),

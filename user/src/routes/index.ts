@@ -16,7 +16,7 @@ const router = express.Router();
  * @param {Request} req - Express request object, containing the current user's session.
  * @param {Response} res - Express response object used to send back the list of users.
  */
-router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
+router.get('/api/user', requireAuth, async (req: Request, res: Response) => {
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
@@ -39,7 +39,7 @@ router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
  * @param {Response} res - Express response object used to send back the user data.
  */
 router.get(
-  '/api/users/:id',
+  '/api/user/:id',
   requireAuth,
   async (req: Request, res: Response) => {
     const user = await User.findById(req.params.id);

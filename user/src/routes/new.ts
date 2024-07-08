@@ -4,7 +4,7 @@ import { requireAuth } from '@travismtickets/common';
 
 const router = express.Router();
 
-router.post('/api/users', requireAuth, async (req: Request, res: Response) => {
+router.post('/api/user', requireAuth, async (req: Request, res: Response) => {
   const { email, firstName, lastName } = req.body;
 
   const user = User.build({ email, firstName, lastName });
