@@ -13,11 +13,18 @@ spec:
     - host: example-app.com
       http:
         paths:
-          - path: /api/users/?(.*)
+          - path: /api/auth/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: auth-srv
+                port:
+                  number: 3000
+          - path: /api/user/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: user-srv
                 port:
                   number: 3000
           - path: /?(.*) # Catch all other paths, ideally for the client service (React app)

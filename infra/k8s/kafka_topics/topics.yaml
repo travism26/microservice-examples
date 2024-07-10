@@ -1,0 +1,25 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: system-events # This will send events to the systems topic to track system events (e.g. user signups, logins, etc.)
+  labels:
+    strimzi.io/cluster: systems-kafka-cluster # Name of your Kafka cluster
+spec:
+  partitions: 1 # Number of partitions for the topic
+  replicas: 2 # Number of replicas for the topic
+  config:
+    retention.ms: 604800000 # Retention period in milliseconds (7 days)
+    segment.bytes: 536870912 # Segment size in bytes (512 MB)
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: notifications # This will send notifications to the notifications topic to track user notifications (e.g. email, SMS, etc.)
+  labels:
+    strimzi.io/cluster: systems-kafka-cluster # Name of your Kafka cluster
+spec:
+  partitions: 1 # Number of partitions for the topic
+  replicas: 2 # Number of replicas for the topic
+  config:
+    retention.ms: 2592000000 # Retention period in milliseconds (30 days)
+    segment.bytes: 536870912 # Segment size in bytes (512 MB)

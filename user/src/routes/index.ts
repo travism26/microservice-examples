@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user';
 import { NotAuthorizedError, requireAuth } from '@travismtickets/common';
+import util from 'util';
 
 const router = express.Router();
 
@@ -20,6 +21,9 @@ router.get('/api/user', requireAuth, async (req: Request, res: Response) => {
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
+  // console.log(
+  //   `currentUser: ${util.inspect(req.currentUser, false, null, true)}`
+  // );
   const userId = req.currentUser!.id;
   console.log(`userId: ${userId}`);
   const users = await User.find({});
