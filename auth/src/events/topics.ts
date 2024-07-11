@@ -1,5 +1,5 @@
-export enum Subjects {
+export enum Topics {
   SystemEvents = 'system-events',
   Notifications = 'notifications',
-  // Add other subjects as needed
+  // Add other topics as needed
 }
