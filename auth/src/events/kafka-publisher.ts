@@ -1,11 +1,8 @@
 import { Kafka, Producer } from 'kafkajs';
-import { Topics } from './topics';
+import { Event } from './event';
 
-interface Event {
-  topic: Topics;
-  data: any;
-}
-
+// MOVE THESE TO COMMON MODULE LATER
+// I want to get them working first then ill move them to common module
 export abstract class Publisher<T extends Event> {
   abstract topic: T['topic'];
   private producer: Producer;
