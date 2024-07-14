@@ -5,15 +5,20 @@ I am planning on creating a nodejs project that will be a good starting point fo
 # CURRENTLY WORKING ON
 
 - Auth service (Kafka implementation)
-  - Trying to get kafka working, I created an abstract class for the event publisher and subscriber. I am trying to get the kafka publisher and subscriber working with the abstract class.
-  - I created two concrete classes for the event publisher and consumer: `SystemEventPublisher` and `SystemEventConsumer` these will be used to connect and publish / consume events to the kafka broker.
+  - Trying to get kafka working, I created an abstract class for the event publisher and subscriber. I am trying to get the kafka publisher and subscriber working with the abstract class. (WORKING)
+  - I created two concrete classes for the event publisher and consumer: `SystemEventPublisher` and `SystemEventConsumer` these will be used to connect and publish / consume events to the kafka broker. (TBD, testing needed)
   - Once they are working as expected ill move them to the common library and use them across all services.
 
 # Project structure
 
 The project will have the following services:
 
-- Auth service
+- Auth service (Complete)
+  - Register a user (complete)
+  - Login a user (complete)
+  - Logout a user (complete)
+  - Verify token (complete)
+  - Kafka implementation (WORKING) <-- This will be moved to the common library once it is working as expected
 - User service (Not implemented yet)
 - MORE TO COME
 
@@ -31,10 +36,17 @@ The project will have the following services:
 1. Clone the repository
    - Create secrets for the service:
      - `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdasd`
+   - Install the kafka operator
+     - `helm repo add strimzi https://strimzi.io/charts/`
+     - `helm install my-kafka-operator strimzi/strimzi-kafka-operator`
 2. Edit hosts file to add the domain name
    - `sudo nano /etc/hosts`
    - Add the following line: `127.0.0.1 example-app.com`
-3. Run `skaffold dev` to start the development environment
+3. Run the commands: (I seperated kafka from the skaffold file because it was causing issues with the skaffold file, I will fix this later)
+
+- Install kafka cluster: `kubectl apply -f infra/kafka/kafka-deployment.yaml`
+- Start develop environment: `skaffold dev`
+
 4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
 5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
 

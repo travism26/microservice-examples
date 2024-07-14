@@ -3,6 +3,7 @@ import { app } from './app';
 import { Kafka } from 'kafkajs';
 import { SystemEventsConsumer } from './events/systemEventsConsumer';
 import { SystemEventsPublisher } from './events/systemEventsPublisher';
+import { kafkaWrapper } from './kafka-wrapper';
 
 const start = async () => {
   console.log('Starting up...');
@@ -19,25 +20,16 @@ const start = async () => {
   let systemEventsProducer: SystemEventsPublisher | null = null;
 
   if (process.env.KAFKA_BROKER) {
-    // This might need a wrapper class to handle the Kafka client.
-    const kafka = new Kafka({
-      clientId: 'auth',
-      brokers: ['systems-kafka-cluster-kafka-bootstrap:9092'],
-      // sasl: { // NOT SURE WHY THIS IS NOT WORKING... need more research/investigation
-      //   mechanism: 'scram-sha-512',
-      //   username: 'my-username',
-      //   password: 'my-password',
-      // },
-      ssl: false,
-      connectionTimeout: 3000,
-    });
-    systemEventsConsumer = new SystemEventsConsumer(kafka);
-    // systemEventsProducer = new SystemEventsPublisher(kafka);
+    // Build and initialize the KafkaWrapper singleton
+    // this is a better approach to handle the Kafka client
+    await kafkaWrapper.initialize([process.env.KAFKA_BROKER]);
+    systemEventsConsumer = new SystemEventsConsumer(kafkaWrapper.getClient());
+    systemEventsProducer = new SystemEventsPublisher(kafkaWrapper.getClient());
 
     try {
       await systemEventsConsumer.connect();
       await systemEventsConsumer.listen();
-      // await systemEventsProducer.connect();
+      await systemEventsProducer.connect();
       console.log('Kafka consumer connected');
     } catch (err) {
       console.error('Error during Kafka consumer startup:', err);

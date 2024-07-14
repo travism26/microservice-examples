@@ -1,37 +1,78 @@
-import { Kafka } from 'kafkajs';
+import { Kafka, KafkaConfig } from 'kafkajs';
 
-// The KafkaWrapper class is designed to encapsulate the Kafka client configuration and initialization logic.
-// By creating a singleton object of this class, we ensure that there is only one instance of the Kafka client
-// throughout the application. This approach has several benefits:
-
-// 1. Resource Efficiency: Initializing the Kafka client can be resource-intensive, involving network connections
-//    and configurations. A singleton ensures that these resources are allocated once, reducing overhead.
-
-// 2. Consistency: Having a single instance of the Kafka client ensures that all parts of the application
-//    interact with Kafka in a consistent manner, using the same client configuration and connection.
-
-// 3. Easy Access: The singleton object can be easily imported and used across different modules in the application,
-//    simplifying the codebase by avoiding the need to pass the client instance around.
-
-// 4. Simplified Management: Managing the lifecycle (such as connection and disconnection) of the Kafka client
-//    becomes simpler, as it's centralized to a single point in the application.
-
-// The `kafkaWrapper` singleton object is created at the bottom of this file and exported for use throughout
-// the application. It initializes the Kafka client with the provided broker address from the environment variables,
-// ensuring that the client is ready to use immediately upon import.
 class KafkaWrapper {
-  private _client: Kafka;
+  private static _instance: KafkaWrapper;
+  private _client: Kafka | null = null;
 
-  constructor(broker: string) {
-    this._client = new Kafka({
-      clientId: 'auth',
-      brokers: [broker],
+  /**
+   * Gets the singleton instance of the KafkaWrapper.
+   * If the instance does not exist, it creates one and returns it.
+   * @returns {KafkaWrapper} The singleton instance of the KafkaWrapper.
+   */
+  static getInstance(): KafkaWrapper {
+    if (!KafkaWrapper._instance) {
+      KafkaWrapper._instance = new KafkaWrapper();
+    }
+    return KafkaWrapper._instance;
+  }
+
+  /**
+   * Initializes the Kafka client with the provided broker addresses and optional configuration.
+   * If the client is already initialized, it resolves immediately.
+   * @param {string[]} brokers - The list of broker addresses.
+   * @param {KafkaConfig} [options] - Optional Kafka configuration.
+   * @returns {Promise<void>} A promise that resolves when the client is successfully initialized or rejects with an error.
+   */
+  initialize(brokers: string[], options?: KafkaConfig): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (!this._client) {
+        this._client = new Kafka({
+          clientId: 'auth',
+          brokers,
+          ...options,
+        });
+
+        // Use the admin client to check the connection
+        const admin = this._client.admin();
+        admin
+          .connect()
+          .then(() => {
+            console.log('Connected to Kafka');
+            resolve();
+          })
+          .catch((err) => {
+            console.error('Failed to connect to Kafka', err);
+            reject(err);
+          });
+      } else {
+        // If the client is already initialized, resolve immediately
+        resolve();
+      }
     });
   }
 
-  getClient() {
+  /**
+   * Returns the Kafka client instance.
+   * Throws an error if the client is not initialized.
+   * @returns {Kafka} The Kafka client instance.
+   * @throws {Error} If the Kafka client is not initialized.
+   */
+  getClient(): Kafka {
+    if (!this._client) {
+      throw new Error('Kafka client is not initialized');
+    }
     return this._client;
   }
 }
 
-export const kafkaWrapper = new KafkaWrapper(process.env.KAFKA_BROKER!);
+// Function to build and initialize the KafkaWrapper singleton
+// function buildKafkaWrapper(brokers: string[], options?: KafkaConfig) {
+//   const instance = KafkaWrapper.getInstance();
+//   instance.initialize(brokers, options);
+//   return instance;
+// }
+
+// Example usage
+// const kafkaWrapper = buildKafkaWrapper(['localhost:9092'], { ssl: true });
+// Exporting the singleton KafkaWrapper instance for use throughout the application (e.g., in consumers and publishers)
+export const kafkaWrapper = new KafkaWrapper();
