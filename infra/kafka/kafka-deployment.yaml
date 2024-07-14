@@ -2,7 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: systems-kafka-cluster
-  namespace: kafka # Ensure the namespace is correct
+  namespace: default # Ensure the namespace is correct
 spec:
   kafka:
     version: 3.7.0
@@ -45,7 +45,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kafka-metrics
-  namespace: kafka # Ensure the namespace is correct
+  namespace: default # Ensure the namespace is correct
   labels:
     app: strimzi
 data:
@@ -69,8 +69,8 @@ data:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: systems-kafka-user
-  namespace: kafka # Ensure the namespace is correct
+  name: my-kafka-user
+  namespace: default # Ensure the namespace is correct
   labels:
     strimzi.io/cluster: systems-kafka-cluster
 spec:
@@ -103,3 +103,13 @@ spec:
           - Describe
           - Write
         host: '*'
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-kafka-user-secret
+  namespace: default
+type: Opaque
+data:
+  username: bXktdXNlcm5hbWU=
+  password: bXktcGFzc3dvcmQ=

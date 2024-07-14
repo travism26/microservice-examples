@@ -19,8 +19,10 @@ export class SystemEventsConsumer extends Consumer<SystemEvent> {
     super(client, 'system-events-group');
   }
 
+  // Method to handle incoming messages
+  // This method will be called for each message received by the consumer
   onMessage(data: SystemEvent['data']): void {
-    console.log('Event data:', data);
-    // Process the event data here
+    console.log('SystemEventsConsumer - onMessage() -> Event data:', data);
+    // Process the incoming event data here
   }
 }
