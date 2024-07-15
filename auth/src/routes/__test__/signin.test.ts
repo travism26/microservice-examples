@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
 
+jest.mock('../../kafka-wrapper');
+
 describe('Signin Route', () => {
   it('should be defined', async () => {
     const response = await request(app).post('/api/auth/signin').send({});

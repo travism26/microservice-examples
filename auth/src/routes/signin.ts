@@ -52,14 +52,20 @@ router.post(
     };
     console.log('User signed in and JWT generated');
 
-    console.log('Publishing user signed in event');
-    const systemEventsPublisher = new SystemEventsPublisher(
-      kafkaWrapper.getClient()
-    ).publish({
-      id: existingUser.id,
-      timestamp: new Date(),
-      details: 'User signed in',
-    });
+    try {
+      console.log('Publishing user signed in event');
+      const systemEventsProducer = kafkaWrapper.getProducer(
+        'system-events-producer'
+      ) as SystemEventsPublisher;
+
+      await systemEventsProducer.publish({
+        id: existingUser.id,
+        timestamp: new Date(),
+        details: 'User signed in',
+      });
+    } catch (err) {
+      console.error('Error publishing user signed in event:', err);
+    }
     res.status(200).send(existingUser);
   }
 );

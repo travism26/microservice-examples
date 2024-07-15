@@ -1,8 +1,13 @@
-import { Kafka, KafkaConfig } from 'kafkajs';
+import { Kafka, KafkaConfig, ProducerConfig, ConsumerConfig } from 'kafkajs';
+import { Publisher } from './events/kafka-publisher';
+import { Consumer } from './events/kafka-consumer';
+import { Event } from './events/event';
 
 class KafkaWrapper {
   private static _instance: KafkaWrapper;
   private _client: Kafka | null = null;
+  private _producers: Map<string, Publisher<Event>> = new Map();
+  private _consumers: Map<string, Consumer<Event>> = new Map();
 
   /**
    * Gets the singleton instance of the KafkaWrapper.
@@ -63,16 +68,38 @@ class KafkaWrapper {
     }
     return this._client;
   }
+
+  async addProducer(id: string, producer: Publisher<Event>) {
+    await producer.connect();
+    this._producers.set(id, producer);
+  }
+
+  async addConsumer(id: string, consumer: Consumer<Event>) {
+    await consumer.connect();
+    this._consumers.set(id, consumer);
+  }
+
+  getProducer(id: string): Publisher<Event> {
+    if (!this._producers.has(id)) {
+      if (!this._client) {
+        throw new Error('Kafka client is not initialized');
+      }
+      throw new Error(`Producer ${id} is not found`);
+    }
+    console.log('Producer found');
+    return this._producers.get(id)!;
+  }
+
+  getConsumer(id: string): Consumer<Event> {
+    if (!this._consumers.has(id)) {
+      if (!this._client) {
+        throw new Error('Kafka client is not initialized');
+      }
+      throw new Error(`Consumer ${id} is not found`);
+    }
+    console.log('Consumer found');
+    return this._consumers.get(id)!;
+  }
 }
 
-// Function to build and initialize the KafkaWrapper singleton
-// function buildKafkaWrapper(brokers: string[], options?: KafkaConfig) {
-//   const instance = KafkaWrapper.getInstance();
-//   instance.initialize(brokers, options);
-//   return instance;
-// }
-
-// Example usage
-// const kafkaWrapper = buildKafkaWrapper(['localhost:9092'], { ssl: true });
-// Exporting the singleton KafkaWrapper instance for use throughout the application (e.g., in consumers and publishers)
 export const kafkaWrapper = new KafkaWrapper();
