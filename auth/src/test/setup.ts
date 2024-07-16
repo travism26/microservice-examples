@@ -4,6 +4,8 @@ import request from 'supertest';
 import { app } from '../app';
 import jwt from 'jsonwebtoken';
 
+jest.mock('../kafka-wrapper');
+
 // global signin function for testing purposes
 // this function will create a fake cookie
 // and attach it to the request object
