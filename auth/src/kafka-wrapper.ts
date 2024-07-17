@@ -1,7 +1,8 @@
 import { Kafka, KafkaConfig, ProducerConfig, ConsumerConfig } from 'kafkajs';
-import { Publisher } from './events/kafka-publisher';
-import { Consumer } from './events/kafka-consumer';
-import { Event } from './events/event';
+// import { Publisher as oldPublisher } from './events/kafka-publisher';
+// import { Consumer as oldConsumer } from './events/kafka-consumer';
+// import { Event as oldEvent } from './events/event';
+import { Event, Consumer, Publisher } from '@rickjms/microservices-common';
 
 class KafkaWrapper {
   private static _instance: KafkaWrapper;
@@ -28,11 +29,15 @@ class KafkaWrapper {
    * @param {KafkaConfig} [options] - Optional Kafka configuration.
    * @returns {Promise<void>} A promise that resolves when the client is successfully initialized or rejects with an error.
    */
-  initialize(brokers: string[], options?: KafkaConfig): Promise<void> {
+  initialize(
+    brokers: string[],
+    clientId: string = 'auth',
+    options?: KafkaConfig
+  ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (!this._client) {
         this._client = new Kafka({
-          clientId: 'auth',
+          clientId: clientId,
           brokers,
           ...options,
         });

@@ -50,6 +50,79 @@ The project will have the following services:
 4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
 5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
 
+## Troubleshooting
+
+### Make sure strimzi operator is running before running the kafka deployment
+
+```
+k get pods
+NAME                                       READY   STATUS    RESTARTS      AGE
+strimzi-cluster-operator-97fd6b494-76kxf   1/1     Running   6 (20m ago)   2d
+
+# Run the kafka deployment
+k apply -f infra/kafka/kafka-deployment.yaml
+kafka.kafka.strimzi.io/systems-kafka-cluster created
+configmap/kafka-metrics created
+kafkauser.kafka.strimzi.io/my-kafka-user created
+secret/my-kafka-user-secret created
+```
+
+### Now you should see the kafka pods running
+
+Here is an example of the pods running it takes about 2-3 minutes for the pods to get into the running and stable state.
+
+```
+k get pods
+NAME                                                     READY   STATUS    RESTARTS      AGE
+strimzi-cluster-operator-97fd6b494-76kxf                 1/1     Running   6 (23m ago)   2d
+systems-kafka-cluster-entity-operator-7b65f6979b-lqrmm   2/2     Running   0             31s
+systems-kafka-cluster-kafka-0                            1/1     Running   2 (65s ago)   72s
+systems-kafka-cluster-kafka-1                            1/1     Running   2 (65s ago)   72s
+systems-kafka-cluster-kafka-2                            1/1     Running   2 (65s ago)   72s
+systems-kafka-cluster-zookeeper-0                        1/1     Running   0             2m9s
+systems-kafka-cluster-zookeeper-1                        1/1     Running   0             2m9s
+systems-kafka-cluster-zookeeper-2                        1/1     Running   0             2m9s
+```
+
+### Now you can run the skaffold dev command
+
+I ommited the output because it is quite long but you should see the services starting up and connecting to kafka and mongoDB
+
+```
+skaffold dev
+[...]
+Watching for changes...
+[user]
+[user] > user@1.0.0 start
+[auth]
+[user] > ts-node-dev --poll src/index.ts
+[auth] > auth@1.0.0 start
+[auth] > ts-node-dev --poll src/index.ts
+[auth]
+[user]
+[auth] [INFO] 11:32:59 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.5.3)
+[user] [INFO] 11:32:59 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.5.3)
+[user] Starting up...
+[user] (node:25) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[user] (Use `node --trace-deprecation ...` to show where the warning was created)
+[user] Connected to mongoDB
+[user] listening on port 3000 user service is running...
+[auth] Starting up...
+[auth] (node:24) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[auth] (Use `node --trace-deprecation ...` to show where the warning was created)
+[auth] Connected to Kafka
+[auth] {"level":"WARN","timestamp":"2024-07-16T11:33:02.278Z","logger":"kafkajs","message":"KafkaJS v2.0.0 switched default partitioner. To retain the same partitioning behavior as in previous versions, create the producer with the option \"createPartitioner: Partitioners.LegacyPartitioner\". See the migration guide at https://kafka.js.org/docs/migration-guide-v2.0.0#producer-new-default-partitioner for details. Silence this warning by setting the environment variable \"KAFKAJS_NO_PARTITIONER_WARNING=1\""}
+[auth] Connecting to Kafka producer...
+[auth] Connected to Kafka producer
+[auth] Consumer found
+[auth] Producer found
+[auth] {"level":"INFO","timestamp":"2024-07-16T11:33:02.298Z","logger":"kafkajs","message":"[Consumer] Starting","groupId":"system-events-group"}
+[auth] {"level":"INFO","timestamp":"2024-07-16T11:33:05.436Z","logger":"kafkajs","message":"[ConsumerGroup] Consumer has joined the group","groupId":"system-events-group","memberId":"auth-a6809e31-339e-49f0-9b08-bd6190ce2414","leaderId":"auth-a6809e31-339e-49f0-9b08-bd6190ce2414","isLeader":true,"memberAssignment":{"system-events":[0]},"groupProtocol":"RoundRobinAssigner","duration":3137}
+[auth] Kafka consumer connected
+[auth] Connected to MongoDB
+[auth] Listening on port 3000
+```
+
 # Run tests
 
 - Each service has its own tests that can be run by running `npm run test` in the service directory

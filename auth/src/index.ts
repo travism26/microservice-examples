@@ -22,7 +22,8 @@ const start = async () => {
     try {
       // Build and initialize the KafkaWrapper singleton
       // this is a better approach to handle the Kafka client
-      await kafkaWrapper.initialize([process.env.KAFKA_BROKER]);
+      const clientId = process.env.KAFKA_CLIENT_ID || 'auth';
+      await kafkaWrapper.initialize([process.env.KAFKA_BROKER], clientId);
       // Add the consumer and producer to the KafkaWrapper to manage their lifecycle (connections)
       await kafkaWrapper.addConsumer(
         'system-events-consumer',

@@ -19,6 +19,8 @@ app.use(
   cookieSession({ signed: false, secure: process.env.NODE_ENV !== 'test' })
 );
 
+// app.use(currentUser) ensures that the current user is set on the request object
+// this is to ensure that the current user is available to all routes.
 app.use(currentUser);
 app.use(indexUserRouter);
 app.use(newUserRouter);
