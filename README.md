@@ -167,3 +167,4 @@ One course that I learned a lot from is stephen grider's microservices course on
 I will be writing blog posts about the things I learned while creating this project. I will be posting them on my [blog](https://www.travisallister.com/blog)
 
 - [Using Skaffold for local development](https://www.travisallister.com/post/using-skaffold-for-development-in-kubernetes)
+- [Integrating Kafka into Your Kubernetes Microservice Application](https://www.travisallister.com/post/integrating-kafka-into-your-kubernetes-microservice-application)
