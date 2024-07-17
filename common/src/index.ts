@@ -10,3 +10,9 @@ export * from './middlewares/current-user';
 export * from './middlewares/error-handlers';
 export * from './middlewares/require-auth';
 export * from './middlewares/validate-request';
+
+// these exports are for the events folder
+export * from './events/base-kafka-consumer';
+export * from './events/base-kafka-publisher';
+export * from './events/topics';
+export * from './events/event';
