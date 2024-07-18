@@ -1,8 +1,5 @@
 import { Kafka } from 'kafkajs';
 import { Consumer, Event, Topics } from '@rickjms/microservices-common';
-// import { Consumer as oldConsumer } from './kafka-consumer';
-// import { Topics as oldTopics } from './topics';
-// import { Event as oldEvent } from './event';
 
 interface SystemEvent extends Event {
   topic: Topics.SystemEvents;
