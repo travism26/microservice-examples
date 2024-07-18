@@ -1,10 +1,9 @@
 import { Kafka, Consumer as KafkaConsumer, EachMessagePayload } from 'kafkajs';
-import { Topics } from './topics'; // Importing Topics enum for topic type safety
 import { Event } from './event'; // Importing Event interface for event type safety
 
 // Abstract class Consumer to be extended by specific Kafka consumers
 export abstract class Consumer<T extends Event> {
-  abstract topic: Topics; // Abstract property to be defined with the specific Kafka topic
+  abstract topic: T['topic']; // Abstract property to be defined with the specific Kafka topic
   abstract onMessage(data: T['data']): void; // Abstract method to handle incoming messages
 
   protected consumer: KafkaConsumer; // KafkaConsumer instance for consuming messages
@@ -22,6 +21,7 @@ export abstract class Consumer<T extends Event> {
   }
 
   // Subscribes to the topic and listens for messages
+  // not much error handling here, but i will add it later...
   async listen() {
     await this.consumer.subscribe({ topic: this.topic, fromBeginning: true }); // Subscribes to the specified topic from the beginning
     await this.consumer.run({
