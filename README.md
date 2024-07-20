@@ -145,7 +145,7 @@ Watching for changes...
 - I will use Prometheus for monitoring
 - I will use Grafana for visualization
 
-# Phase 1
+# Phase 1 (Complete)
 
 Build the authentication service I will try to create a production ready service that will have the following features:
 
@@ -154,9 +154,13 @@ Build the authentication service I will try to create a production ready service
 - Logout a user (complete)
 - Verify token (complete)
 
-# Phase 2
+# Phase 2 (In progress)
 
 Build the user service (Not implemented yet) and add communication between the auth service and the user service, this will be done using a sync communication method (REST).
+
+# Phase 3 (Not implemented yet)
+
+Build the an eventprocessing service that will be used to process events from the kafka broker. This will be used to send emails, notifications, etc.
 
 # A lot of the stuff learned from this project will be from the following sources:
 
