@@ -23,4 +23,11 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
-
+    - image: travism26/eventlogger
+      context: eventlogger
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'

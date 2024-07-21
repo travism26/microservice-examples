@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventlogger-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventlogger-mongo
+  template:
+    metadata:
+      labels:
+        app: eventlogger-mongo
+    spec:
+      containers:
+        - image: mongo
+          name: eventlogger-mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventlogger-mongo-srv
+spec:
+  selector:
+    app: eventlogger-mongo
+  ports:
+    - name: db # This is just for logging purposes
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

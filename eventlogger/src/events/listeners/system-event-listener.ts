@@ -1,7 +1,6 @@
 import { Kafka } from 'kafkajs';
 import { Consumer, Topics, SystemEvent } from '@rickjms/microservices-common';
 
-// This will be removed and replace with an action microservice that will handle the system events
 export class SystemEventsConsumer extends Consumer<SystemEvent> {
   topic: Topics.SystemEvents = Topics.SystemEvents;
 
