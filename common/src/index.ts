@@ -16,3 +16,4 @@ export * from './events/base-kafka-consumer';
 export * from './events/base-kafka-publisher';
 export * from './events/topics';
 export * from './events/event';
+export * from './events/system-event';
