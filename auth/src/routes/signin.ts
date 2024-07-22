@@ -58,10 +58,22 @@ router.post(
         'system-events-producer'
       ) as SystemEventsPublisher;
 
+      // New Schema for user created event (NOT TESTED YET)
       await systemEventsProducer.publish({
-        id: existingUser.id,
+        eventId: 'event-' + new Date().getTime(), // Generate a unique event ID
         timestamp: new Date(),
-        details: 'User signed in',
+        eventType: 'user_signin',
+        userId: existingUser.id,
+        username: existingUser.email,
+        sourceIp: req.ip,
+        eventDescription: 'User signed in',
+        serviceName: 'auth-service',
+        severityLevel: 'INFO',
+        applicationVersion: process.env.APP_VERSION || '1.0.0',
+        // Optional fields
+        additionalMetadata: {
+          userAgent: req.get('User-Agent'),
+        },
       });
     } catch (err) {
       console.error('Error publishing user signed in event:', err);

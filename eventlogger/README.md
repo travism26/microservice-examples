@@ -1,6 +1,27 @@
 # What does this do?
 
-- Currently, this only prints the event log to the console.
+- This service listens to the `system-events` topic, logs and stores the events in a MongoDB database.
+
+# Break down of all the attributes
+
+- Event ID: A unique identifier for the event.
+- Timestamp: The date and time when the event occurred.
+- Event Type: A categorization of the event (e.g., user_signup, user_login, security_alert, data_update).
+- User ID: The identifier of the user associated with the event, if applicable.
+- Username: The username of the user involved in the event, if applicable.
+- Source IP: The IP address from which the event originated.
+- Event Description: A detailed description of the event.
+- Service Name: The name of the microservice where the event occurred.
+- Severity Level: The severity of the event (e.g., INFO, WARN, ERROR, CRITICAL).
+- Location: The geographical location associated with the event, if applicable.
+- Correlation ID: An identifier to correlate this event with other related events.
+- Request ID: The identifier of the request that triggered the event.
+- Response Status: The status code or result of the event (e.g., success, failure).
+- Payload: Any relevant data or payload associated with the event.
+- User Agent: Information about the user's device or browser.
+- Session ID: The session identifier, if applicable.
+- Application Version: The version of the application at the time of the event.
+- Additional Metadata: Any other relevant metadata specific to your application or event type.
 
 # Logs (For reference)
 

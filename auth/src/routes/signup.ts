@@ -45,13 +45,26 @@ router.post(
 
     try {
       console.log('Publishing user created event');
+
       const systemEventsProducer = kafkaWrapper.getProducer(
         'system-events-producer'
       ) as SystemEventsPublisher;
+
       await systemEventsProducer.publish({
-        id: user.id,
+        eventId: 'event-' + new Date().getTime(), // Generate a unique event ID
         timestamp: new Date(),
-        details: 'User created',
+        eventType: 'user_signup',
+        userId: user.id,
+        username: user.email, // Assuming username is email
+        sourceIp: req.ip,
+        eventDescription: 'User created',
+        serviceName: 'auth-service',
+        severityLevel: 'INFO',
+        applicationVersion: process.env.APP_VERSION || '1.0.0',
+        // Optional fields
+        additionalMetadata: {
+          userAgent: req.get('User-Agent'),
+        },
       });
     } catch (err) {
       console.error('Error publishing user created event:', err);
