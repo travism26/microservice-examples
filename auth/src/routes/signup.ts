@@ -50,6 +50,7 @@ router.post(
         'system-events-producer'
       ) as SystemEventsPublisher;
 
+      // New Schema for user created event (NOT TESTED YET)
       await systemEventsProducer.publish({
         eventId: 'event-' + new Date().getTime(), // Generate a unique event ID
         timestamp: new Date(),
