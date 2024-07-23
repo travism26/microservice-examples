@@ -1,6 +1,6 @@
 {
   "name": "@rickjms/microservices-common",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -12,8 +12,18 @@
     "build": "npm run clean && tsc",
     "pub": "npm version patch && npm run build && npm publish"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "microservices",
+    "utilities",
+    "shared-library",
+    "common-functions",
+    "service-communication",
+    "event-handling",
+    "logging",
+    "configuration",
+    "kafka"
+  ],
+  "author": "Travis Martin travis.martin266@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "del-cli": "^5.1.0",
