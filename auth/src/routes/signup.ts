@@ -70,6 +70,7 @@ router.post(
     } catch (err) {
       console.error('Error publishing user created event:', err);
     }
+    // Publish event to Kafka topic: auth-service.USER_CREATED
     res.status(201).send(user);
   }
 );
