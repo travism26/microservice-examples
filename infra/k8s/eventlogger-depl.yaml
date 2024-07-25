@@ -29,16 +29,16 @@ spec:
               value: 'mongodb://eventlogger-mongo-srv:27017/eventlogger'
             - name: KAFKA_BROKER
               value: 'systems-kafka-cluster-kafka-bootstrap:9092' # Update with your broker address and port
-            - name: KAFKA_USER
-              valueFrom:
-                secretKeyRef:
-                  name: my-kafka-user-secret # Updated to match your secret name
-                  key: username
-            - name: KAFKA_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: my-kafka-user-secret # Updated to match your secret name
-                  key: password
+            # - name: KAFKA_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: my-kafka-user-secret # Updated to match your secret name
+            #       key: username
+            # - name: KAFKA_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: my-kafka-user-secret # Updated to match your secret name
+            #       key: password
 ---
 apiVersion: v1
 kind: Service

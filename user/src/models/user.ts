@@ -4,9 +4,10 @@ import mongoose from 'mongoose';
 // An interface that describes the properties
 // that are required to create a new User
 interface UserAttrs {
+  id?: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string; // we dont know the user's first name and last name when they sign up
+  lastName?: string; // we dont know the user's first name and last name when they sign up
 }
 
 // An interface that describes the properties
@@ -54,7 +55,10 @@ const userSchema = new mongoose.Schema(
 // userSchema.plugin(updateIfCurrentPlugin);
 
 userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User(attrs);
+  return new User({
+    _id: attrs.id,
+    email: attrs.email,
+  });
 };
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);

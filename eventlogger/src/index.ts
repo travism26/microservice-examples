@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { kafkaWrapper } from './kafka-wrapper';
-import { SystemEventsConsumer } from './events/listeners/system-event-listener';
+import { SystemEventsConsumer } from './events/consumers/system-event-listener';
 import { app } from './app';
 
 const start = async () => {

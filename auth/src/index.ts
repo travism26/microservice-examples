@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { SystemEventsConsumer } from './events/systemEventsConsumer';
 import { SystemEventsPublisher } from './events/systemEventsPublisher';
+import { UserCreatedEventPublisher } from './events/userCreatedEventPublisher';
 import { kafkaWrapper } from './kafka-wrapper';
 
 const start = async () => {
@@ -24,25 +25,17 @@ const start = async () => {
       // this is a better approach to handle the Kafka client
       const clientId = process.env.KAFKA_CLIENT_ID || 'auth';
       await kafkaWrapper.initialize([process.env.KAFKA_BROKER], clientId);
-      // Add the consumer and producer to the KafkaWrapper to manage their lifecycle (connections)
-      // await kafkaWrapper.addConsumer(
-      //   'system-events-consumer',
-      //   new SystemEventsConsumer(kafkaWrapper.getClient())
-      // );
       await kafkaWrapper.addProducer(
         'system-events-producer',
         new SystemEventsPublisher(kafkaWrapper.getClient())
       );
-      // Method returns a Consumer<Event> type its to genric so we need to cast it to SystemEventsConsumer
-      // systemEventsConsumer = kafkaWrapper.getConsumer(
-      //   'system-events-consumer'
-      // ) as SystemEventsConsumer;
+      await kafkaWrapper.addProducer(
+        'user-created-event-producer',
+        new UserCreatedEventPublisher(kafkaWrapper.getClient())
+      );
       systemEventsProducer = kafkaWrapper.getProducer(
         'system-events-producer'
       ) as SystemEventsPublisher;
-
-      // await systemEventsConsumer.listen();
-      // console.log('Kafka consumer connected');
     } catch (err) {
       console.error('Error during Kafka consumer startup:', err);
       // You might want to exit here if Kafka is critical to your app

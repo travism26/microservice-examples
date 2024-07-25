@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user';
-import { requireAuth } from '@travismtickets/common';
+import { requireAuth } from '@rickjms/microservices-common';
 
 const router = express.Router();
 
