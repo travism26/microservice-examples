@@ -67,6 +67,11 @@ router.post(
           userAgent: req.get('User-Agent'),
         },
       });
+
+      await kafkaWrapper.getProducer('user-created-event-producer').publish({
+        userId: user.id,
+        email: user.email,
+      });
     } catch (err) {
       console.error('Error publishing user created event:', err);
     }

@@ -30,7 +30,12 @@ export class UserCreatedConsumer extends Consumer<UserCreatedEvent> {
     //  - etc
     // Need to process the incoming event data here by creating a new user
     console.log(' - onMessage() -> Creating a new user...');
-    const newUser = User.build({ id: data.userId, email: data.email });
+    const newUser = User.build({
+      id: data.userId,
+      email: data.email,
+      firstName: '',
+      lastName: '',
+    });
     await newUser.save();
     console.log(' - onMessage() -> New user saved:', newUser);
   }

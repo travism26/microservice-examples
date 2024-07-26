@@ -32,11 +32,11 @@ const userSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: true,
+      required: false,
     },
     lastName: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
@@ -58,6 +58,8 @@ userSchema.statics.build = (attrs: UserAttrs) => {
   return new User({
     _id: attrs.id,
     email: attrs.email,
+    firstName: attrs.firstName,
+    lastName: attrs.lastName,
   });
 };
 

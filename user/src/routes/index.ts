@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user';
-import { NotAuthorizedError, requireAuth } from '@travismtickets/common';
+import { NotAuthorizedError, requireAuth } from '@rickjms/microservices-common';
 import util from 'util';
 
 const router = express.Router();
@@ -27,6 +27,9 @@ router.get('/api/user', requireAuth, async (req: Request, res: Response) => {
   const userId = req.currentUser!.id;
   console.log(`userId: ${userId}`);
   const users = await User.find({});
+  if (!users) {
+    res.send([]);
+  }
   res.send(users);
 });
 
