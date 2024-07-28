@@ -18,9 +18,47 @@ The project will have the following services:
   - Login a user (complete)
   - Logout a user (complete)
   - Verify token (complete)
-  - Kafka implementation (WORKING) <-- This will be moved to the common library once it is working as expected
-- User service (Not implemented yet)
-- MORE TO COME
+  - Kafka implementation (complete) <-- This will be moved to the common library once it is working as expected
+- User service (complete)
+  - Create a user (complete)
+  - Get a user (complete)
+  - Update a user (complete)
+  - Kafka implementation: Receive signup event from auth service (complete)
+- Event logger service (complete)
+  - Log all events that happen in the system (complete)
+  - Kafka implementation: Receive events from all services (complete)
+- Common library (complete)
+  - Contains common code that will be used across all services (complete)
+  - Contains the abstract class for the event publisher and subscriber (complete)
+  - Contains the concrete classes for the event publisher and subscriber (complete)
+- TODO: Add a frontend service that will be used to interact with the backend services
+- TODO: Add a service that will be used with redis
+
+# Product Catalog Service (Work in progress)
+
+## Key Features:
+
+1. Add Product: Allows adding new products to the catalog.
+2. Get Product: Retrieves product details, utilizing Redis for caching.
+3. Update Product: Updates existing product details and refreshes the cache.
+4. Delete Product: Removes products from the catalog and invalidates the cache.
+
+## Implementation Steps:
+
+1. Set Up Redis:
+
+- Use a Redis client like ioredis or redis in your Node.js application.
+- Configure Redis connection settings.
+
+2. Service Structure:
+
+- Create endpoints for adding, retrieving, updating, and deleting products.
+- Implement caching logic for the Get Product endpoint.
+
+3. Kafka Integration: (Maybe not needed)
+
+- Publish events when products are added, updated, or deleted.
+- Subscribe to relevant events to update the cache accordingly.
 
 # Pre-requisites
 
@@ -130,7 +168,7 @@ Watching for changes...
 # System Design
 
 - I want both async and sync communication between services
-  - I want to use a message broker for async communication (Kafka, RabbitMQ, etc.)
+  - I want to use a message broker for async communication (Kafka, RabbitMQ, etc.) <-- Kafka
   - I want to use REST for sync communication
 - I want to use a database for storing data (Postgres, mongoDB)
 - I want to use a caching layer (Redis)
@@ -154,13 +192,13 @@ Build the authentication service I will try to create a production ready service
 - Logout a user (complete)
 - Verify token (complete)
 
-# Phase 2 (In progress)
+# Phase 2 (Completed)
 
-Build the user service (Not implemented yet) and add communication between the auth service and the user service, this will be done using a sync communication method (REST).
+Build the user service (Not implemented yet) and add communication between the auth service and the user service, I will be using Kafka for this to demonstrate how to use Kafka in a microservice application and how to use it for async communication between services. I adjust my initial plan from using sync REST async communication between these services to using Kafka for async communication between services.
 
-# Phase 3 (Not implemented yet)
+# Phase 3 (Completed)
 
-Build the an eventprocessing service that will be used to process events from the kafka broker. This will be used to send emails, notifications, etc.
+Adjusted instead of creating a notification service I built an eventlogger service that will log all the events that happen in the system. This will be used to demonstrate how to use Kafka for async communication.
 
 # A lot of the stuff learned from this project will be from the following sources:
 
