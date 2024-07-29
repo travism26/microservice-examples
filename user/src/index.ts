@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { kafkaWrapper } from './kafka-wrapper';
 import { UserCreatedConsumer } from './events/consumers/user-created-listener';
+import { RedisClient } from './redis-client';
 
 const start = async () => {
   console.log('Starting up...');
@@ -30,13 +31,38 @@ const start = async () => {
     ) as UserCreatedConsumer;
     await userCreatedConsumer.listen();
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to mongoDB');
+    console.log('Connected to MongoDB');
+
+    // Initialize Redis if REDIS_HOST is defined
+    if (process.env.REDIS_HOST) {
+      RedisClient.getInstance();
+      console.log('Connected to Redis');
+    } else {
+      console.warn('REDIS_HOST is not defined, not using Redis cache');
+    }
   } catch (err) {
-    console.error(err);
+    console.error('Error starting up:', err);
   }
   app.listen(3000, () => {
-    console.log('listening on port 3000 user service is running...');
+    console.log('Listening on port 3000, user service is running...');
   });
+
+  // Graceful shutdown
+  process.on('SIGINT', async () => {
+    console.log('SIGINT received, shutting down gracefully');
+    await shutdown();
+  });
+  process.on('SIGTERM', async () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    await shutdown();
+  });
+};
+
+const shutdown = async () => {
+  if (process.env.REDIS_HOST) {
+    await RedisClient.disconnect();
+  }
+  process.exit(0);
 };
 
 start();

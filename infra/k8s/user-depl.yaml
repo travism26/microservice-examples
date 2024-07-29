@@ -29,6 +29,8 @@ spec:
                   fieldPath: metadata.name
             - name: KAFKA_BROKER
               value: 'systems-kafka-cluster-kafka-bootstrap:9092' # Update with your broker address and port
+            - name: REDIS_HOST
+              value: 'user-redis-srv'
             # - name: KAFKA_USER
             #   valueFrom:
             #     secretKeyRef:

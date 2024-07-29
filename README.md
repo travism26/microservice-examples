@@ -34,7 +34,7 @@ The project will have the following services:
 - TODO: Add a frontend service that will be used to interact with the backend services
 - TODO: Add a service that will be used with redis
 
-# Product Catalog Service (Work in progress)
+# Product Catalog Service (Work in progress) <-- Maybe ill add kafka to the user service instead of the product catalog service
 
 ## Key Features:
 
