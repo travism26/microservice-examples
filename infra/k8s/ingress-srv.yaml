@@ -27,7 +27,7 @@ spec:
                 name: user-srv
                 port:
                   number: 3000
-          - path: /?(.*) # Catch all other paths, ideally for the client service (React app)
+          - path: /?(.*) # THIS NEEDS TO BE LAST! Catch all other paths, ideally for the client service (React app)
             pathType: Prefix
             backend:
               service:

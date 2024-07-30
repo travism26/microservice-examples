@@ -31,3 +31,11 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
+    - image: travism26/microservice-client
+      context: microservice-client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '**/*.js'
