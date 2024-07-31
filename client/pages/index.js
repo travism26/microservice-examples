@@ -13,7 +13,7 @@ const LandingPage = ({ currentUser }) => {
 LandingPage.getInitialProps = async (context) => {
   console.log('LANDING PAGE!');
   const client = buildClient(context);
-  const { data } = await client.get('/api/users/currentuser');
+  const { data } = await client.get('/api/auth/currentuser');
   return data;
 };
 
@@ -32,6 +32,6 @@ LandingPage.getInitialProps = async (context) => {
 
 // cross kubernetes cluster communication to nginx ingress controller
 // http://SERVICENAME.NAMESPACE.svc.cluster.local
-// http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser
+// http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/auth/currentuser
 
 export default LandingPage;

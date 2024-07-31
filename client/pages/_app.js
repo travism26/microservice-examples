@@ -14,7 +14,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
-  const { data } = await client.get('/api/users/currentuser');
+  const { data } = await client.get('/api/auth/currentuser');
 
   // execute getInitialProps of the child component
   // and pass the context object to it as well

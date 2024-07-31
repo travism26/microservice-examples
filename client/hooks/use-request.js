@@ -4,7 +4,7 @@ import { useState } from 'react';
 // removed onSuccess from the arguments
 export default ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState([]);
-
+  // method: 'post' or 'get' or 'delete' or 'put'
   const doRequest = async (props = {}) => {
     try {
       setErrors([]);
