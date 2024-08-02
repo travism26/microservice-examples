@@ -7,7 +7,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler, NotFoundError } from '@travismtickets/common';
+import { errorHandler, NotFoundError } from '@rickjms/microservices-common';
 
 // cert error type in google: thisisunsafe
 const app = express();
