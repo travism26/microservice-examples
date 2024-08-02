@@ -86,7 +86,7 @@ The project will have the following services:
 - Start develop environment: `skaffold dev`
 
 4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
-5. Visit `http://example-app.com/api/users/currentuser` in your browser you should see a response from the auth service: `currentUser:	"You are not logged in"`
+5. Visit `http://example-app.com/` in your browser you should see the UI for the application.
 
 ## Troubleshooting
 

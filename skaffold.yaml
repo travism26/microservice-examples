@@ -32,7 +32,7 @@ build:
           - dest: .
             src: 'src/**/*.ts'
     - image: travism26/microservice-client
-      context: microservice-client
+      context: client
       docker:
         dockerfile: Dockerfile
       sync:

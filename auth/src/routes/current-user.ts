@@ -1,14 +1,14 @@
 import express from 'express';
 
-import { currentUser } from '@travismtickets/common';
+import { currentUser } from '@rickjms/microservices-common';
 
 const router = express.Router();
 
 router.get('/api/auth/currentuser', currentUser, (req, res) => {
   // if the jwt is not null, we will try to verify it
   // if it is not valid, we will send back null
-  console.log('Current user fetched');
-  res.send({ currentUser: req.currentUser || 'You are not logged in' });
+  console.log('Current user fetched', req.currentUser);
+  res.send({ currentUser: req.currentUser });
 });
 
 export { router as currentUserRouter };
