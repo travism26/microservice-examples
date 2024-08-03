@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { User } from '../models/user';
-import { NotAuthorizedError, requireAuth } from '@travismtickets/common';
-import { NotFoundError } from '@travismtickets/common';
+import { NotAuthorizedError, requireAuth } from '@rickjms/microservices-common';
+import { NotFoundError } from '@rickjms/microservices-common';
 
 const router = express.Router();
 

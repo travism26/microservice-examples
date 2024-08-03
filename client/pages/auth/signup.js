@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
+import axios from 'axios';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,12 @@ const Signup = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log(email, password);
-    doRequest();
+    const response = await axios.post('/api/auth/signup', {
+      email,
+      password,
+    });
+    console.log('response: ', response);
+    // doRequest(); // Need to review this code something is off here
   };
   return (
     <form onSubmit={onSubmit}>

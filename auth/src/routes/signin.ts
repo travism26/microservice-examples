@@ -4,7 +4,10 @@ import jwt from 'jsonwebtoken';
 
 import { Password } from '../services/password';
 import { User } from '../models/user';
-import { validateRequest, BadRequestError } from '@travismtickets/common';
+import {
+  validateRequest,
+  BadRequestError,
+} from '@rickjms/microservices-common';
 import { kafkaWrapper } from '../kafka-wrapper';
 import { SystemEventsPublisher } from '../events/systemEventsPublisher';
 

@@ -13,6 +13,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
+  console.log('appContext.ctx.req.headers: ', appContext);
   const client = buildClient(appContext.ctx);
   const { data } = await client.get('/api/auth/currentuser');
 

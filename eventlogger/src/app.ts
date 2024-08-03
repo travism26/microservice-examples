@@ -7,7 +7,7 @@ import {
   errorHandler,
   NotFoundError,
   currentUser,
-} from '@travismtickets/common';
+} from '@rickjms/microservices-common';
 
 // cert error type in google: thisisunsafe
 const app = express();

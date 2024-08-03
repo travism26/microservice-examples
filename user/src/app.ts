@@ -7,7 +7,7 @@ import {
   errorHandler,
   NotFoundError,
   currentUser,
-} from '@travismtickets/common';
+} from '@rickjms/microservices-common';
 import { indexUserRouter } from './routes/index';
 import { newUserRouter } from './routes/new';
 
