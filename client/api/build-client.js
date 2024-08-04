@@ -8,16 +8,6 @@ export default ({ req }) => {
     // we are on the server
     // requests should be made to http://SERVICENAME.NAMESPACE.svc.cluster.local
     // http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
-    /*
-    how to find the service name and namespace:
-    1. kubectl get namespaces: kubectl get namespaces
-    2. kubectl get services -n NAMESPACE: kubectl get services -n ingress-nginx
-      k get services -n ingress-nginx
-      NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-      ingress-nginx-controller             LoadBalancer   10.xx.xx.xx      localhost     80:32029/TCP,443:30965/TCP   42d
-      ingress-nginx-controller-admission   ClusterIP      10.xx.xx.xx      <none>        443/TCP                      42d
-    3. SERVICE_NAME.NAMESPACE.svc.cluster.local => ingress-nginx-controller.ingress-nginx.svc.cluster.local
-    */
     return axios.create({
       baseURL:
         'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',

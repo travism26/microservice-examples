@@ -7,7 +7,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: travism26/auth
+    - image: travism26/microservice-auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -15,7 +15,7 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
-    - image: travism26/user
+    - image: travism26/microservice-user
       context: user
       docker:
         dockerfile: Dockerfile
@@ -23,7 +23,7 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
-    - image: travism26/eventlogger
+    - image: travism26/microservice-eventlogger
       context: eventlogger
       docker:
         dockerfile: Dockerfile

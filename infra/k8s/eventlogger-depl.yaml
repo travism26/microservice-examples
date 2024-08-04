@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eventlogger
-          image: travism26/eventlogger # Change this to your dockerhub username / image name
+          image: travism26/microservice-eventlogger # Change this to your dockerhub username / image name
           env:
             - name: KAFKA_CLIENT_ID
               valueFrom:

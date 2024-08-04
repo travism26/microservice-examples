@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { app } from './app';
-import { SystemEventsConsumer } from './events/systemEventsConsumer';
 import { SystemEventsPublisher } from './events/systemEventsPublisher';
 import { UserCreatedEventPublisher } from './events/userCreatedEventPublisher';
 import { kafkaWrapper } from './kafka-wrapper';
@@ -51,20 +50,19 @@ const start = async () => {
     console.log('Connected to MongoDB');
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);
-    process.exit(1); // Exit the process with a failure code
   }
 
-  const shutdown = async () => {
-    console.log('Shutting down...');
-    if (systemEventsProducer) {
-      await systemEventsProducer.disconnect();
-      console.log('Kafka Producer disconnected');
-    }
-    process.exit(0); // Exit the process with a success code
-  };
+  // const shutdown = async () => {
+  //   console.log('Shutting down...');
+  //   if (systemEventsProducer) {
+  //     await systemEventsProducer.disconnect();
+  //     console.log('Kafka Producer disconnected');
+  //   }
+  //   process.exit(0); // Exit the process with a success code
+  // };
 
-  process.on('SIGINT', shutdown);
-  process.on('SIGTERM', shutdown);
+  // process.on('SIGINT', shutdown);
+  // process.on('SIGTERM', shutdown);
 
   app.listen(3000, () => {
     console.log('Listening on port 3000');

@@ -14,7 +14,7 @@ const Signup = () => {
     },
     onSuccess: (data) => Router.push('/'),
   });
- 
+
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log(email, password);

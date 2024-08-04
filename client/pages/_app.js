@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import buildClient from '../api/build-client';
 import Header from '../components/header';
 
-// https://nextjs.org/docs/messages/css-global
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
@@ -13,7 +12,6 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
-  console.log('appContext.ctx.req.headers: ', appContext);
   const client = buildClient(appContext.ctx);
   const { data } = await client.get('/api/auth/currentuser');
 

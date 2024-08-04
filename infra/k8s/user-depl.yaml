@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: travism26/user # Change this to your dockerhub username / image name
+          image: travism26/microservice-user # Change this to your dockerhub username / image name
           env:
             - name: JWT_KEY
               valueFrom:

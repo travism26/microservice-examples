@@ -32,6 +32,6 @@ LandingPage.getInitialProps = async (context) => {
 
 // cross kubernetes cluster communication to nginx ingress controller
 // http://SERVICENAME.NAMESPACE.svc.cluster.local
-// http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/auth/currentuser
+// http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser
 
 export default LandingPage;
