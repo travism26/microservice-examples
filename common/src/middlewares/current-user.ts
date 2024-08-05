@@ -24,8 +24,6 @@ export const currentUser = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('mtravis - req.currentUser', req.currentUser);
-  console.log('mtravis - req.session?.jwt', req.session?.jwt);
   // if the jwt is not null, we will try to verify it
   // if it is not valid, we will send back null
   // if it is valid, we will send back the payload
@@ -46,7 +44,6 @@ export const currentUser = (
     // in other middlewares
     req.currentUser = payload;
   } catch (err) {
-    console.log('çError verifying JWT:', err);
     res.send({ currentUser: null });
   }
 

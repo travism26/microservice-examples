@@ -1,5 +1,5 @@
 import express from 'express';
-import 'express-async-errors';
+import 'express-async-errors'; // to handle async errors in express
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
