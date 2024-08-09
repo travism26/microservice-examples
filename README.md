@@ -2,63 +2,9 @@
 
 I am planning on creating a nodejs project that will be a good starting point for creating a microservice application. This will be a good Template for creating a microservice application.
 
-# CURRENTLY WORKING ON
+# Microservice Architecture Diagram
 
-- Auth service (Kafka implementation)
-  - Trying to get kafka working, I created an abstract class for the event publisher and subscriber. I am trying to get the kafka publisher and subscriber working with the abstract class. (WORKING)
-  - I created two concrete classes for the event publisher and consumer: `SystemEventPublisher` and `SystemEventConsumer` these will be used to connect and publish / consume events to the kafka broker. (TBD, testing needed)
-  - Once they are working as expected ill move them to the common library and use them across all services.
-
-# Project structure
-
-The project will have the following services:
-
-- Auth service (Complete)
-  - Register a user (complete)
-  - Login a user (complete)
-  - Logout a user (complete)
-  - Verify token (complete)
-  - Kafka implementation (complete) <-- This will be moved to the common library once it is working as expected
-- User service (complete)
-  - Create a user (complete)
-  - Get a user (complete)
-  - Update a user (complete)
-  - Kafka implementation: Receive signup event from auth service (complete)
-- Event logger service (complete)
-  - Log all events that happen in the system (complete)
-  - Kafka implementation: Receive events from all services (complete)
-- Common library (complete)
-  - Contains common code that will be used across all services (complete)
-  - Contains the abstract class for the event publisher and subscriber (complete)
-  - Contains the concrete classes for the event publisher and subscriber (complete)
-- TODO: Add a frontend service that will be used to interact with the backend services
-- TODO: Add a service that will be used with redis
-
-# Product Catalog Service (Work in progress) <-- Maybe ill add kafka to the user service instead of the product catalog service
-
-## Key Features:
-
-1. Add Product: Allows adding new products to the catalog.
-2. Get Product: Retrieves product details, utilizing Redis for caching.
-3. Update Product: Updates existing product details and refreshes the cache.
-4. Delete Product: Removes products from the catalog and invalidates the cache.
-
-## Implementation Steps:
-
-1. Set Up Redis:
-
-- Use a Redis client like ioredis or redis in your Node.js application.
-- Configure Redis connection settings.
-
-2. Service Structure:
-
-- Create endpoints for adding, retrieving, updating, and deleting products.
-- Implement caching logic for the Get Product endpoint.
-
-3. Kafka Integration: (Maybe not needed)
-
-- Publish events when products are added, updated, or deleted.
-- Subscribe to relevant events to update the cache accordingly.
+![](screenshots/microservice_diagram.png)
 
 # Pre-requisites
 
@@ -182,23 +128,6 @@ Watching for changes...
 
 - I will use Prometheus for monitoring
 - I will use Grafana for visualization
-
-# Phase 1 (Complete)
-
-Build the authentication service I will try to create a production ready service that will have the following features:
-
-- Register a user (complete)
-- Login a user (complete)
-- Logout a user (complete)
-- Verify token (complete)
-
-# Phase 2 (Completed)
-
-Build the user service (Not implemented yet) and add communication between the auth service and the user service, I will be using Kafka for this to demonstrate how to use Kafka in a microservice application and how to use it for async communication between services. I adjust my initial plan from using sync REST async communication between these services to using Kafka for async communication between services.
-
-# Phase 3 (Completed)
-
-Adjusted instead of creating a notification service I built an eventlogger service that will log all the events that happen in the system. This will be used to demonstrate how to use Kafka for async communication.
 
 # A lot of the stuff learned from this project will be from the following sources:
 
