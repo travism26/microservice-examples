@@ -1,6 +1,5 @@
 import request from 'supertest';
 import { app } from '../../app';
-import e from 'express';
 
 const createUser = async (email: String) => {
   const cookie = global.signin();
@@ -30,4 +29,16 @@ it('returns a 201 on successful signup', async () => {
 
 it('returns a 401 if not authenticated', async () => {
   await request(app).get('/api/user').send().expect(401);
+});
+
+it('returns a 200 on fetching user', async () => {
+  const user = await createUser('test@test.com');
+
+  const response = await request(app)
+    .get(`/api/user/${user.body.id}`)
+    .set('Cookie', global.signin())
+    .send()
+    .expect(200);
+
+  expect(response.body.email).toEqual('test@test.com');
 });

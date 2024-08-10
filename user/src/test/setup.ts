@@ -4,6 +4,9 @@ import request from 'supertest';
 import { app } from '../app';
 import jwt from 'jsonwebtoken';
 
+// Add the mock for the redis client set and get methods
+jest.mock('../redis-client');
+
 // global signin function for testing purposes
 // this function will create a fake cookie
 // and attach it to the request object
@@ -13,14 +16,6 @@ import jwt from 'jsonwebtoken';
 // an alternative to this we can create a seperate file
 // and put this function in there and import it in all the test files
 // but this is a better approach as it is a global function
-
-// declare global {
-//   namespace NodeJS {
-//     interface Global {
-//       signin(): Promise<string[]>;
-//     }
-//   }
-// }
 declare global {
   var signin: () => string[];
 }
