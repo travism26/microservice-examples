@@ -1,4 +1,4 @@
-# Installation
+# Installation (Kong Gateway) WORK IN PROGRESS
 
 [Reference](https://docs.konghq.com/gateway/latest/install/kubernetes/proxy/)
 
@@ -36,4 +36,30 @@ kubectl describe pod <pod-name> -n kong
 # Check logs of a pod
 kubectl logs <pod_name> -n kong -c <init_container_name>
 kubectl logs <pod_name> -n kong -c <container_name>
+```
+
+## Data Plane
+
+Data Plane is the data plane for Kong Gateway. It is responsible for processing incoming requests and responses.
+
+```bash
+helm install kong-dp kong/kong -n kong --values ./values-dp.yaml
+```
+
+## Local k8s
+
+```bash
+# Find the IP address of your local Kubernetes node
+NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
+# Get the NodePort assigned to the Kong service
+NODE_PORT=$(kubectl get svc kong-dp-kong-proxy -n kong -o jsonpath='{.spec.ports[?(@.name=="kong-proxy")].nodePort}')
+# Access Kong Gateway
+echo "http://$NODE_IP:$NODE_PORT"
+```
+
+### Test Kong Gateway
+
+```bash
+# Fetch the LoadBalancer address for the kong-dp service and store it in the PROXY_IP environment variable
+export PROXY_IP=$(kubectl get svc kong-dp-kong-proxy -n kong -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
