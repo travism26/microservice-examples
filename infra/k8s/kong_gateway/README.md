@@ -48,6 +48,8 @@ helm install kong-dp kong/kong -n kong --values ./values-dp.yaml
 
 ## Local k8s
 
+### Access Kong Gateway (NodePort)
+
 ```bash
 # Find the IP address of your local Kubernetes node
 NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
@@ -55,6 +57,15 @@ NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="
 NODE_PORT=$(kubectl get svc kong-dp-kong-proxy -n kong -o jsonpath='{.spec.ports[?(@.name=="kong-proxy")].nodePort}')
 # Access Kong Gateway
 echo "http://$NODE_IP:$NODE_PORT"
+```
+
+### Access Kong Gateway (Port Forwarding)
+
+```bash
+# Forward the Kong Gateway port to your local machine
+kubectl port-forward -n kong svc/kong-dp-kong-proxy 8080:80
+# Access Kong Gateway
+echo "http://localhost:8080"
 ```
 
 ### Test Kong Gateway
