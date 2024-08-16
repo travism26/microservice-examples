@@ -2,6 +2,10 @@
 
 I am planning on creating a nodejs project that will be a good starting point for creating a microservice application. This will be a good Template for creating a microservice application.
 
+# Currently working on
+
+I am trying to get an api gateway working with the microservices. I am using the kong api gateway. I have the kong api gateway running in a docker container. I am trying to get the kong api gateway to route traffic to the services. I am having some issues with the kong api gateway. I will update this when I get it working.
+
 # Microservice Architecture Diagram
 
 ![](screenshots/microservice_diagram.png)
