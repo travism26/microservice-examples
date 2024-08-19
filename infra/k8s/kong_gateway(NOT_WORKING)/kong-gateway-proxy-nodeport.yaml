@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-gateway-proxy
+  namespace: kong
+spec:
+  type: NodePort
+  selector:
+    app: kong
+  ports:
+    - name: proxy
+      protocol: TCP
+      port: 80
+      targetPort: 8000
+      nodePort: 32080 # You can specify a custom port or let Kubernetes assign one.
+    - name: proxy-ssl
+      protocol: TCP
+      port: 443
+      targetPort: 8443
+      nodePort: 32443 # You can specify a custom port or let Kubernetes assign one.
