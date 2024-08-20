@@ -1,0 +1,525 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /metrics
+      prometheus.io/port: "9100"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-20T11:46:13Z"
+    generateName: traefik-5848d689b-
+    labels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: traefik
+      helm.sh/chart: traefik-10.3.2
+      pod-template-hash: 5848d689b
+    name: traefik-5848d689b-92m2x
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: traefik-5848d689b
+      uid: 2d6fa4bf-99fa-4b1a-a9dd-45f13b36e281
+    resourceVersion: "793623"
+    uid: 33a9cc76-d0a8-4dac-83b6-84c3fa251ac9
+  spec:
+    containers:
+    - args:
+      - --global.checknewversion
+      - --global.sendanonymoususage
+      - --entryPoints.metrics.address=:9100/tcp
+      - --entryPoints.traefik.address=:9000/tcp
+      - --entryPoints.web.address=:8000/tcp
+      - --entryPoints.websecure.address=:8443/tcp
+      - --api.dashboard=true
+      - --ping=true
+      - --metrics.prometheus=true
+      - --metrics.prometheus.entrypoint=metrics
+      - --providers.kubernetescrd
+      - --providers.kubernetesingress
+      image: traefik:2.5.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ping
+          port: 9000
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: traefik
+      ports:
+      - containerPort: 9100
+        name: metrics
+        protocol: TCP
+      - containerPort: 9000
+        name: traefik
+        protocol: TCP
+      - containerPort: 8000
+        name: web
+        protocol: TCP
+      - containerPort: 8443
+        name: websecure
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 1
+        httpGet:
+          path: /ping
+          port: 9000
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsGroup: 65532
+        runAsNonRoot: true
+        runAsUser: 65532
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cqb9h
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: docker-desktop
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 65532
+    serviceAccount: traefik
+    serviceAccountName: traefik
+    terminationGracePeriodSeconds: 60
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: data
+    - emptyDir: {}
+      name: tmp
+    - name: kube-api-access-cqb9h
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T11:46:14Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T11:46:13Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T11:46:23Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T11:46:23Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T11:46:13Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://cdbaf20fd96fb33662fceef64989821ac69101c6cbe3949920e0672523e7330b
+      image: traefik:2.5.1
+      imageID: docker-pullable://traefik@sha256:b24fc55dcd6c7751ad8b63f45bb293c3b9e869707f60699a388ea00c38ee1a20
+      lastState: {}
+      name: traefik
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T11:46:13Z"
+    hostIP: 192.168.65.3
+    hostIPs:
+    - ip: 192.168.65.3
+    phase: Running
+    podIP: 10.1.3.47
+    podIPs:
+    - ip: 10.1.3.47
+    qosClass: BestEffort
+    startTime: "2024-08-20T11:46:13Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: traefik
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2024-08-20T11:40:58Z"
+    labels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: traefik
+      helm.sh/chart: traefik-10.3.2
+    name: traefik
+    namespace: default
+    resourceVersion: "793236"
+    uid: a4c0ef6d-54c2-473e-b50f-779644c1b241
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.105.194.223
+    clusterIPs:
+    - 10.105.194.223
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      nodePort: 30357
+      port: 80
+      protocol: TCP
+      targetPort: web
+    - name: websecure
+      nodePort: 30284
+      port: 443
+      protocol: TCP
+      targetPort: websecure
+    - name: dashboard
+      nodePort: 32113
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    selector:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/name: traefik
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - hostname: localhost
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: traefik
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2024-08-20T11:40:58Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: traefik
+      helm.sh/chart: traefik-10.3.2
+    name: traefik
+    namespace: default
+    resourceVersion: "793627"
+    uid: d731d2f8-d119-46e4-a14f-ea4a73ddb824
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: traefik
+        app.kubernetes.io/name: traefik
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9100"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/instance: traefik
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: traefik
+          helm.sh/chart: traefik-10.3.2
+      spec:
+        containers:
+        - args:
+          - --global.checknewversion
+          - --global.sendanonymoususage
+          - --entryPoints.metrics.address=:9100/tcp
+          - --entryPoints.traefik.address=:9000/tcp
+          - --entryPoints.web.address=:8000/tcp
+          - --entryPoints.websecure.address=:8443/tcp
+          - --api.dashboard=true
+          - --ping=true
+          - --metrics.prometheus=true
+          - --metrics.prometheus.entrypoint=metrics
+          - --providers.kubernetescrd
+          - --providers.kubernetesingress
+          image: traefik:2.5.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: traefik
+          ports:
+          - containerPort: 9100
+            name: metrics
+            protocol: TCP
+          - containerPort: 9000
+            name: traefik
+            protocol: TCP
+          - containerPort: 8000
+            name: web
+            protocol: TCP
+          - containerPort: 8443
+            name: websecure
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /ping
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources: {}
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+          - mountPath: /tmp
+            name: tmp
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65532
+        serviceAccount: traefik
+        serviceAccountName: traefik
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - emptyDir: {}
+          name: data
+        - emptyDir: {}
+          name: tmp
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-08-20T11:40:58Z"
+      lastUpdateTime: "2024-08-20T11:40:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-08-20T11:40:58Z"
+      lastUpdateTime: "2024-08-20T11:41:19Z"
+      message: ReplicaSet "traefik-5848d689b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: traefik
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2024-08-20T11:40:58Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: traefik
+      helm.sh/chart: traefik-10.3.2
+      pod-template-hash: 5848d689b
+    name: traefik-5848d689b
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: traefik
+      uid: d731d2f8-d119-46e4-a14f-ea4a73ddb824
+    resourceVersion: "793626"
+    uid: 2d6fa4bf-99fa-4b1a-a9dd-45f13b36e281
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: traefik
+        app.kubernetes.io/name: traefik
+        pod-template-hash: 5848d689b
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9100"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/instance: traefik
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: traefik
+          helm.sh/chart: traefik-10.3.2
+          pod-template-hash: 5848d689b
+      spec:
+        containers:
+        - args:
+          - --global.checknewversion
+          - --global.sendanonymoususage
+          - --entryPoints.metrics.address=:9100/tcp
+          - --entryPoints.traefik.address=:9000/tcp
+          - --entryPoints.web.address=:8000/tcp
+          - --entryPoints.websecure.address=:8443/tcp
+          - --api.dashboard=true
+          - --ping=true
+          - --metrics.prometheus=true
+          - --metrics.prometheus.entrypoint=metrics
+          - --providers.kubernetescrd
+          - --providers.kubernetesingress
+          image: traefik:2.5.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: traefik
+          ports:
+          - containerPort: 9100
+            name: metrics
+            protocol: TCP
+          - containerPort: 9000
+            name: traefik
+            protocol: TCP
+          - containerPort: 8000
+            name: web
+            protocol: TCP
+          - containerPort: 8443
+            name: websecure
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /ping
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources: {}
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+          - mountPath: /tmp
+            name: tmp
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65532
+        serviceAccount: traefik
+        serviceAccountName: traefik
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - emptyDir: {}
+          name: data
+        - emptyDir: {}
+          name: tmp
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""

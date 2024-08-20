@@ -1,0 +1,29 @@
+dashboard:
+  enabled: true
+  domain: 'traefik.localhost'
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - traefik.localhost
+    paths:
+      - /
+    tls: []
+api:
+  insecure: true
+  dashboard: true
+service:
+  ports:
+    - port: 80
+      name: 'web'
+      targetPort: web
+      protocol: TCP
+    - port: 443
+      name: 'websecure'
+      targetPort: websecure
+      protocol: TCP
+    - port: 9000
+      name: 'dashboard'
+      targetPort: traefik
+      protocol: TCP
