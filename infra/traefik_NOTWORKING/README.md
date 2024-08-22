@@ -1,4 +1,4 @@
-# Restoring the Deployment
+# Restoring the Deployment just realized this api gateway costs money
 
 If you have saved the Kubernetes resources or Helm values, you can restore the deployment. There are two ways to do this:
 

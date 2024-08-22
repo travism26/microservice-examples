@@ -5,10 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: 'true'
-    # konghq.com/strip-path: 'true' # for kong
-    # kubernetes.io/ingress.class: kong # for kong
 spec:
-  # ingressClassName: kong
   rules:
     - host: example-app.com
       http:

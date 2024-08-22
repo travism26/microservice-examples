@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: example-app-gateway
+  namespace: default # Ensure this matches your namespace
+spec:
+  selector:
+    istio: ingressgateway # This must match the label on your Istio ingress gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - 'example-app.com'
+        - '*' # Optional: This allows matching any hostname

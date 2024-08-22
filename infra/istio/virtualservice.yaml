@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: example-app
+  namespace: default
+spec:
+  hosts:
+    - '*' # Match any hostname
+  gateways:
+    - example-app-gateway
+  http:
+    - match:
+        - uri:
+            prefix: '/api/auth'
+      route:
+        - destination:
+            host: auth-srv
+            port:
+              number: 3000
+    - match:
+        - uri:
+            prefix: '/api/user'
+      route:
+        - destination:
+            host: user-srv
+            port:
+              number: 3000
+    - match:
+        - uri:
+            prefix: '/'
+      route:
+        - destination:
+            host: client-srv
+            port:
+              number: 3000
