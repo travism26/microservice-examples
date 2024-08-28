@@ -2,6 +2,10 @@
 
 I am planning on creating a nodejs project that will be a good starting point for creating a microservice application. This will be a good Template for creating a microservice application.
 
+## Dev endpoints
+
+- [Kafka UI](http://localhost:30007/) This endpoint is only available when you run: `kubectl apply -f infra/kafka`. The deployment is in the kafka-ui.yaml file.
+
 # Currently working on
 
 - Seems like this microservice template is near completion. I will be adding more feature as things arise. I would like to add an API gateway, and a service discovery tool.

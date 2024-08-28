@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  namespace: default
+  labels:
+    app: kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: provectuslabs/kafka-ui:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: 'systems-kafka-cluster'
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+              value: 'systems-kafka-cluster-kafka-bootstrap:9092' # Strimzi Kafka bootstrap service
+            - name: KAFKA_CLUSTERS_0_ZOOKEEPER
+              value: 'systems-kafka-cluster-zookeeper-client:2181' # Strimzi Zookeeper client service
+            - name: KAFKA_CLUSTERS_0_AUTHENTICATION
+              value: 'SCRAM-SHA-512'
+            - name: KAFKA_CLUSTERS_0_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: my-kafka-user-secret
+                  key: username
+            - name: KAFKA_CLUSTERS_0_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-kafka-user-secret
+                  key: password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+  namespace: default
+  labels:
+    app: kafka-ui
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: kafka-ui
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui-nodeport
+  namespace: default
+  labels:
+    app: kafka-ui
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      nodePort: 30007 # Adjust as needed
+  selector:
+    app: kafka-ui
