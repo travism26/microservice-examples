@@ -9,6 +9,7 @@ I am planning on creating a nodejs project that will be a good starting point fo
 # Currently working on
 
 - Seems like this microservice template is near completion. I will be adding more feature as things arise. I would like to add an API gateway, and a service discovery tool.
+- I will add Grafana and Prometheus for monitoring and visualization before I consider this project complete.
 
 Now I will be looking into implementing some of the system designs that [bytebyteGo](https://bytebytego.com/courses/system-design-interview/scale-from-zero-to-millions-of-users) has on their website. I will put these into a seperate repository, also I will ommit the reasoing behind the system design as it is already explained on their website. I highly recommend checking out their website if you are interested in system design and improving your system design skills. I am not affiliated with bytebyteGo in any way. They have a great platform for learning system design.
 
