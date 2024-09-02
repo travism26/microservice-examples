@@ -151,3 +151,5 @@ I will be writing blog posts about the things I learned while creating this proj
 - [Scalable Microservices Made Easy: A NodeJS Template with Kafka, Kubernetes, and Redis](https://www.travisallister.com/post/scalable-microservices-made-easy-a-nodejs-template-with-kafka-kubernetes-and-redis)
 - [Using Skaffold for local development](https://www.travisallister.com/post/using-skaffold-for-development-in-kubernetes)
 - [Integrating Kafka into Your Kubernetes Microservice Application](https://www.travisallister.com/post/integrating-kafka-into-your-kubernetes-microservice-application)
+- [Intergrading Prometheus and Grafana into your Kubernetes Microservice Application]() Implemented just need to write the blog post
+- [Creating custom prometheus metrics in your nodejs application]() Implemented just need to write the blog post
