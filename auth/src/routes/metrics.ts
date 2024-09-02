@@ -36,4 +36,4 @@ router.get('/metrics', async (req, res) => {
   res.end(await register.metrics());
 });
 
-export { router as metricsRouter };
+export { router as metricsRouter, register as metricsRegistry };

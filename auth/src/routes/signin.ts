@@ -10,8 +10,20 @@ import {
 } from '@rickjms/microservices-common';
 import { kafkaWrapper } from '../kafka-wrapper';
 import { SystemEventsPublisher } from '../events/systemEventsPublisher';
+import client from 'prom-client';
+import { metricsRegistry } from './metrics';
 
 const router = express.Router();
+
+const loginCounter = new client.Counter({
+  name: 'login_success_total',
+  help: 'Total number of successful logins',
+  labelNames: ['method'], // Add labels if needed
+  registers: [metricsRegistry], // Register with the custom registry
+});
+
+// This is where we register the metric with the registry so it can be collected
+// register.registerMetric(loginCounter);
 
 router.post(
   '/api/auth/signin',
@@ -89,6 +101,9 @@ router.post(
     } catch (err) {
       console.error('Error publishing user signed in event:', err);
     }
+
+    // Increment the login counter
+    loginCounter.inc({ method: req.method });
 
     res.status(200).send(existingUser);
   }
