@@ -38,35 +38,23 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
-
     const existingUser = await User.findOne({ email });
-    console.log('Existing user:', existingUser);
+
     if (!existingUser) {
-      // return res.status(400).send({
-      //   errors: [{ message: 'Invalid credentials' }],
-      // });
       throw new BadRequestError('Invalid credentials');
-      //   return res.status(400).send({
-      //     errors: [{ message: 'Invalid credentials' }],
-      //   });
     }
 
     const passwordsMatch = await Password.compare(
       existingUser.password,
       password
     );
-    console.log('Passwords match:', passwordsMatch);
     if (!passwordsMatch) {
       console.log('Invalid credentials');
-      // return res.status(400).send({
-      //   errors: [{ message: 'Invalid credentials' }],
-      // });
       throw new BadRequestError('Invalid credentials');
     }
     // Generate JWT
     const userJwt = jwt.sign(
       { id: existingUser.id, email: existingUser.email },
-      // ! is used to tell TS that we have already checked for null
       process.env.JWT_KEY!
     );
 
