@@ -1,3 +1,13 @@
+# Blog posts
+
+I will be writing blog posts about the things I learned while creating this project. I will be posting them on my [blog](https://www.travisallister.com/blog). Here are the blog posts that I have written so far and the ones that I am planning on writing. The repo is used to demonstrate the concepts that I write about in my blog posts to show how they can be implemented in a real-world application.
+
+- [Scalable Microservices Made Easy: A NodeJS Template with Kafka, Kubernetes, and Redis](https://www.travisallister.com/post/scalable-microservices-made-easy-a-nodejs-template-with-kafka-kubernetes-and-redis)
+- [Using Skaffold for local development](https://www.travisallister.com/post/using-skaffold-for-development-in-kubernetes)
+- [Integrating Kafka into Your Kubernetes Microservice Application](https://www.travisallister.com/post/integrating-kafka-into-your-kubernetes-microservice-application)
+- [Intergrading Prometheus and Grafana into your Kubernetes Microservice Application]() Implemented just need to write the blog post
+- [Creating custom prometheus metrics in your nodejs application]() Implemented just need to write the blog post
+
 # microservice-examples (Work in progress)
 
 I am planning on creating a nodejs project that will be a good starting point for creating a microservice application. This will be a good Template for creating a microservice application.
@@ -143,13 +153,3 @@ Watching for changes...
 # A lot of the stuff learned from this project will be from the following sources:
 
 One course that I learned a lot from is stephen grider's microservices course on udemy. I will be using a lot of the concepts learned from that course in this project. I highly recommend anyone starting with microservices to take this course. I am not affiliated with Stephen Grider in any way. I just think he is a great teacher and this course is worth mentioning. [Stephen Grider's Microservices course](https://www.udemy.com/course/microservices-with-node-js-and-react/).
-
-# Blog posts
-
-I will be writing blog posts about the things I learned while creating this project. I will be posting them on my [blog](https://www.travisallister.com/blog)
-
-- [Scalable Microservices Made Easy: A NodeJS Template with Kafka, Kubernetes, and Redis](https://www.travisallister.com/post/scalable-microservices-made-easy-a-nodejs-template-with-kafka-kubernetes-and-redis)
-- [Using Skaffold for local development](https://www.travisallister.com/post/using-skaffold-for-development-in-kubernetes)
-- [Integrating Kafka into Your Kubernetes Microservice Application](https://www.travisallister.com/post/integrating-kafka-into-your-kubernetes-microservice-application)
-- [Intergrading Prometheus and Grafana into your Kubernetes Microservice Application]() Implemented just need to write the blog post
-- [Creating custom prometheus metrics in your nodejs application]() Implemented just need to write the blog post
