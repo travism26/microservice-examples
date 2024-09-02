@@ -15,6 +15,7 @@ I am planning on creating a nodejs project that will be a good starting point fo
 ## Dev endpoints
 
 - [Kafka UI](http://localhost:30007/) This endpoint is only available when you run: `kubectl apply -f infra/kafka`. The deployment is in the kafka-ui.yaml file.
+- [Prometheus](http://localhost:30090/graph) This endpoint is only available when you run start the deployment `skaffold dev`. The deployment is in the `prometheus-depl.yaml` file.
 
 # Currently working on
 
