@@ -51,8 +51,8 @@ Now I will be looking into implementing some of the system designs that [bytebyt
    - Add the following line: `127.0.0.1 example-app.com`
 3. Run the commands: (I seperated kafka from the skaffold file because it was causing issues with the skaffold file, I will fix this later)
 
-- Install kafka cluster: `kubectl apply -f infra/kafka/kafka-deployment.yaml`
-- Start develop environment: `skaffold dev`
+- Install kafka cluster: `kubectl apply -f infra/kafka/`
+- Start develop environment: `skaffold dev` from the root directory
 
 4. Ensure your browser does NOT have the dns cached version of `example-app.com` by restarting the browser or clearing the cache or open in incognito mode ;)
 5. Visit `http://example-app.com/` in your browser you should see the UI for the application.
